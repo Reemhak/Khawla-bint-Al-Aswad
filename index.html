@@ -161,6 +161,20 @@ cards.forEach(card=>{
   card.addEventListener('keydown',event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();openProgram(card);}});
 });
 
+function renderImages(imageIds){
+  const items = imageIds.map((id, idx) => `
+    <a href="https://drive.google.com/file/d/${id}/view?usp=sharing" target="_blank" rel="noopener" style="display:block; border-radius:12px; overflow:hidden; border:1px solid #dce2d5; background:white;">
+      <img src="https://drive.google.com/thumbnail?id=${id}&sz=w1200" alt="مشاركة ${idx + 1}" style="width:100%; height:auto; max-height:none; object-fit:contain; display:block;">
+    </a>
+  `).join('');
+  return `
+    <div style="display:flex; flex-direction:column; gap:16px; max-height:460px; overflow-y:auto; padding:5px;">
+      ${items}
+    </div>
+    <p style="font-size:12px; color:var(--muted); margin-top:8px;">اضغطي على أي صورة لفتحها بالحجم الكامل</p>
+  `;
+}
+
 document.querySelectorAll('.detail-option').forEach(button=>{
   button.addEventListener('click',()=>{
     const category=button.dataset.category;
@@ -168,7 +182,12 @@ document.querySelectorAll('.detail-option').forEach(button=>{
     mediaContent.innerHTML='';
     
     if(activeProgram === 'رفاه'){
-      if(category === 'الفيديوهات'){
+      if(category === 'الصور'){
+        mediaContent.innerHTML = renderImages([
+          '10T1xOd3PNOpuKbbI3ZZ5HGWleIQQwWgT',
+          '1Y5Q3E5kfmZVCKLiJHI76lMQLAr4Whw5Y'
+        ]);
+      } else if(category === 'الفيديوهات'){
         mediaContent.innerHTML=`
           <div style="display:flex; flex-direction:column; gap:15px; max-height:420px; overflow-y:auto; padding:5px;">
             <div>
@@ -194,8 +213,6 @@ document.querySelectorAll('.detail-option').forEach(button=>{
             </a>
           </div>
         `;
-      } else {
-        mediaContent.innerHTML='<p>لا توجد صور حالياً</p>';
       }
     } else if(activeProgram === 'برنامج تكافل'){
       if(category === 'الفيديوهات'){
@@ -212,19 +229,21 @@ document.querySelectorAll('.detail-option').forEach(button=>{
       } else {
         mediaContent.innerHTML='<p>لا يوجد محتوى حاليًا</p>';
       }
+    } else if(activeProgram === 'القيم المؤسسية'){
+      if(category === 'الصور'){
+        mediaContent.innerHTML = renderImages([
+          '12B8PwFE-NX8jbTlglB4SW4FI6byQAGEw'
+        ]);
+      } else {
+        mediaContent.innerHTML='<p>لا يوجد محتوى حاليًا</p>';
+      }
     } else if(activeProgram === 'حياك'){
       if(category === 'الصور'){
-        mediaContent.innerHTML=`
-          <div style="display:flex; flex-direction:column; gap:16px; max-height:460px; overflow-y:auto; padding:5px;">
-            <a href="https://drive.google.com/file/d/1YyPSr8X73kV4OrvmpZkcz7g2aJxwapqI/view?usp=sharing" target="_blank" rel="noopener" style="display:block; border-radius:12px; overflow:hidden; border:1px solid #dce2d5; background:white;">
-              <img src="https://drive.google.com/thumbnail?id=1YyPSr8X73kV4OrvmpZkcz7g2aJxwapqI&sz=w1200" alt="مشاركة 1" style="width:100%; height:auto; max-height:none; object-fit:contain; display:block;">
-            </a>
-            <a href="https://drive.google.com/file/d/1KAb8ZHuf2W8DMm1TkJgMUOTCEfRAUxdG/view?usp=sharing" target="_blank" rel="noopener" style="display:block; border-radius:12px; overflow:hidden; border:1px solid #dce2d5; background:white;">
-              <img src="https://drive.google.com/thumbnail?id=1KAb8ZHuf2W8DMm1TkJgMUOTCEfRAUxdG&sz=w1200" alt="مشاركة 2" style="width:100%; height:auto; max-height:none; object-fit:contain; display:block;">
-            </a>
-          </div>
-          <p style="font-size:12px; color:var(--muted); margin-top:8px;">اضغطي على أي صورة لفتحها بالحجم الكامل</p>
-        `;
+        mediaContent.innerHTML = renderImages([
+          '1YyPSr8X73kV4OrvmpZkcz7g2aJxwapqI',
+          '1KAb8ZHuf2W8DMm1TkJgMUOTCEfRAUxdG',
+          '1zXEFfvO1MOTNl10-gQgYITNsEGmn0xgX'
+        ]);
       } else {
         mediaContent.innerHTML='<p>لا يوجد محتوى حاليًا</p>';
       }
